@@ -6,6 +6,9 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -53,7 +56,7 @@ public class Members {
     private Integer businessNumber;
 
     @Column(name = "role", nullable = false)
-    private String role;
+    private String roles;
 
     @Column(name = "provider_id")
     private String providerId;
@@ -61,4 +64,11 @@ public class Members {
     @Column(name = "provider")
     private String provider;
 
+
+    public List<String> getRoleList(){
+        if (this.roles.length() > 0){
+            return Arrays.asList(this.roles.split(","));
+        }
+        return new ArrayList<>();
+    }
 }
