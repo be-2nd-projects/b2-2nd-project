@@ -9,14 +9,14 @@ spring:
       name: user
       password: 1234
   datasource:
-    username: ${DATABASE_USERNAME}
-    password: ${DATABASE_PASSWORD}
+    username: ${DATABASE_USERNAME} # 환경변수에 설정함 DATABASE_USERNAME=root;
+    password: ${DATABASE_PASSWORD} # 환경변수에 설정함 DATABASE_PASSWORD= *****;
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/BE01Project # BE01Project ->  ?? ?? db? ?? ?? ?? ?? ??
+    url: jdbc:mysql://localhost:3306/be02Project # BE01Project ->  ?? ?? db? ?? ?? ?? ?? ??
 jpa:
   hibernate:
     ddl-auto: update
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         format_sql: true
@@ -25,10 +25,10 @@ jpa:
 
 logging:
   level:
-    org.hibernate.SQL: DEBUG
-    org.hibernate.type: trace
-    org.hibernate.type.descriptor.sql: trace
-    org.hibernate.stat: debug
+    org.hibernate.SQL: ERROR
+    org.hibernate.type: ERROR
+    org.hibernate.type.descriptor.sql: ERROR
+    org.hibernate.stat: ERROR
 
 jwt:
   secret-key-source: ${JWT_SECRET_KEY}  #{JWT_SECRET_KEY} = super-coding ????? ????
