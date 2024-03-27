@@ -14,7 +14,7 @@ public class Asks {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "qna_id")
-    private int qnaId;
+    private Integer qnaId;
 
     @Column(name = "title", length = 45, nullable = false)
     private String title;
@@ -32,9 +32,9 @@ public class Asks {
     private Date deletedAt;
 
     @Column(name = "space_id", nullable = false)
-    private int spaceId;
+    private Integer spaceId;
 
     @Column(name = "user_id", nullable = false)
-    private int userId;
+    private Integer userId;
 
 }

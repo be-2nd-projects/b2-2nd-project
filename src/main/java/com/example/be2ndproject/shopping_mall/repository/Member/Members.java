@@ -13,6 +13,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "Members")
 public class Members {
@@ -20,7 +21,7 @@ public class Members {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long userId;
+    private Integer userId;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -37,16 +38,16 @@ public class Members {
     @Column(name = "birth_date")
     private LocalDate birthDate;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "deleted_at", nullable = false)
+    @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
-    @Column(name = "user_status", nullable = false)
+    @Column(name = "user_status")
     private boolean userStatus;
 
     @Column(name = "profile_img_url")

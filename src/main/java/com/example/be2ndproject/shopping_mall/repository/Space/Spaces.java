@@ -18,7 +18,7 @@ public class Spaces {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "space_id")
-    private Long spaceId;
+    private Integer spaceId;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
@@ -31,7 +31,7 @@ public class Spaces {
     private String spaceAddress;
 
     @Column(name = "price")
-    private int price;
+    private Integer price;
 
     @Lob
     @Column(name = "content")
@@ -53,7 +53,7 @@ public class Spaces {
     private String category;
 
     @Column(name = "capacity_num")
-    private int capacityNum;
+    private Integer capacityNum;
 
     @Column(name = "space_status")
     private String spaceStatus;

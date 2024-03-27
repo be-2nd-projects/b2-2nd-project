@@ -10,13 +10,13 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cart_id")
-    private int cartId;
+    private Integer cartId;
 
     @Column(name = "user_id", nullable = false)
-    private int userId;
+    private Integer userId;
 
     @Column(name = "space_id", nullable = false)
-    private int spaceId;
+    private Integer spaceId;
 
 
 }

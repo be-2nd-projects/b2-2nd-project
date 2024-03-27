@@ -1,4 +1,4 @@
-package com.example.security1.config.auth;
+package com.example.be2ndproject.shopping_mall.config.auth;
 
 // 시큐리티가 /login 주소 요청이 오면 낚아채서 로그인을 진행시킨다.
 // 로그인을 진행이 완료가 되면 시큐리티 session을 만들어 줌 (Security ContexHolder)
@@ -41,7 +41,7 @@ public class PrincipalDetails implements UserDetails {
             authorities.add(()->r);
         });
         return authorities;
-    }
+    } // 사용자에게 부여된 권한을 반환하는 메서드
 
 
     @Override
@@ -57,18 +57,18 @@ public class PrincipalDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return true; // 계정이 만료되지 않았는지 확인하는 메서드
     }
 
     @Override
     public boolean isAccountNonLocked() {
         return true;
-    }
+    } // 계정이 잠겨있지 않은지 확인하는 메서드
 
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
-    }
+    } // 자격 증명(비밀번호)가 만료되지 않았는지 확인하는 메서드
 
     @Override
     public boolean isEnabled() {
@@ -80,6 +80,6 @@ public class PrincipalDetails implements UserDetails {
         */
 
         return true;
-    }
+    } // 계정이 활성화 상태인지 확인하는 메서드
 
 }

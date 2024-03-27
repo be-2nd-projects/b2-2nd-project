@@ -14,10 +14,10 @@ public class PaymentHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Payment_history_id")
-    private int paymentHistoryId;
+    private Integer paymentHistoryId;
 
     @Column(name = "payment_id", nullable = false)
-    private int paymentId;
+    private Integer paymentId;
 
     @Column(name = "payment_completed", nullable = false)
     private boolean paymentCompleted = true;

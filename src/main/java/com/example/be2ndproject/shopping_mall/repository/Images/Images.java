@@ -11,13 +11,13 @@ public class Images {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "image_id")
-    private int imageId;
+    private Integer imageId;
 
     @Column(name = "image_url", length = 255)
     private String imageUrl;
 
     @Column(name = "space_id", nullable = false)
-    private int spaceId;
+    private Integer spaceId;
 
     @Column(name = "thumb", length = 1, nullable = false)
     private String thumb = "0";
