@@ -2,6 +2,9 @@ package com.example.be2ndproject.shopping_mall.repository.Answer;
 import com.example.be2ndproject.shopping_mall.repository.Asks.Asks;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 @Data
 @AllArgsConstructor
@@ -22,12 +25,12 @@ public class Answers {
     private String content;
 
     @Column(name = "created_at", nullable = false)
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at", nullable = false)
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
     @Column(name = "deleted_at", nullable = false)
-    private Date deletedAt;
+    private LocalDateTime deletedAt;
 
 }

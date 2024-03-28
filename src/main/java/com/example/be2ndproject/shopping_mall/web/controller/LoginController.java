@@ -12,12 +12,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -35,11 +38,14 @@ public class LoginController {
     @Operation(summary = "회원가입")
     @PostMapping(value = "/sign")
     public ResponseEntity<?> signUp(@RequestBody SignUp signUpRequest) {
+        Map<String, Object> response = new HashMap<>();
 
-        String  signUpMessage  = loginService.signUp(signUpRequest);
+        String signUpMessage = loginService.signUp(signUpRequest);
 
         if (signUpMessage.equals("회원가입이 완료되었습니다.")) {
-            return ResponseEntity.ok().body(Collections.singletonMap("message", signUpMessage));
+            String message = signUpRequest.getName() + " 님이 " + signUpMessage; // 메시지 조합
+            response.put("message", message);
+            return ResponseEntity.ok().body(response);
         } else {
             return ResponseEntity.badRequest().body(Collections.singletonMap("error", signUpMessage));
         }
@@ -66,7 +72,7 @@ public class LoginController {
     public void logout(HttpServletRequest request, HttpServletResponse response) {
         // 현재 사용자 로그아웃 처리
         customLogoutHandler.logout(request, response, null);
-        
+
     }
 
 //    @Operation(summary = "회원 탈퇴")

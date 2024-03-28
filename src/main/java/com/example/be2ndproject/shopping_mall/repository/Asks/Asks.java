@@ -3,6 +3,7 @@ package com.example.be2ndproject.shopping_mall.repository.Asks;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -23,13 +24,13 @@ public class Asks {
     private String content;
 
     @Column(name = "created_at", nullable = false)
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at", nullable = false)
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
     @Column(name = "deleted_at", nullable = false)
-    private Date deletedAt;
+    private LocalDateTime deletedAt;
 
     @Column(name = "space_id", nullable = false)
     private Integer spaceId;

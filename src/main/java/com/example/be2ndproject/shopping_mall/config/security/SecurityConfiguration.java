@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -40,7 +41,9 @@ public class SecurityConfiguration {
                 // 이 방법은 간단하고 쉽게 구현할 수 있지만, 보안 수준이 낮고 인증 정보가 평문으로 전송되기 때문에 보안에 취약함.
                 // Http Basic 인증을 사용하지 않도록 Spring Security 구성을 설정
                 .authorizeHttpRequests(authorize -> // 요청에 대한 접근 권한을 설정
-                        authorize.requestMatchers("/v1/api/logout").authenticated() // 로그아웃은 인증된 사용자에게만 허용
+
+                        authorize
+                                .requestMatchers("/v1/api/logout").authenticated() // 로그아웃은 인증된 사용자에게만 허용
                                 .requestMatchers("/v1/api/guest/**").hasAnyRole("GUEST", "HOST")
                                 .requestMatchers("/v1/api/host/**").hasRole("HOST")
                                 .requestMatchers("/v1/api/sign", "/v1/api/login", "/v2/api-docs",

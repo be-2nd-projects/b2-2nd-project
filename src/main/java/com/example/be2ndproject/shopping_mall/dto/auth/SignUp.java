@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -15,6 +16,7 @@ public class SignUp {
     private String password; // NOT NUL
     private String phoneNumber; // NOT NUL
     private LocalDate birthDate; // NOT NUL
+    private LocalDateTime createAt; // Null 허용
     private String profileImageUrl; // NULL 허용 사진
     private Integer businessNumber; // NULL 허용 사업자 번호
     private String roles; // NOT NULL 기본 USER_GUEST

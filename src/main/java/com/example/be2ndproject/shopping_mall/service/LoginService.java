@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Slf4j
@@ -71,6 +72,9 @@ public class LoginService {
             finalRoles = roles;
         }
 
+        // 회원 가입 시간 설정 (현재 시간)
+        LocalDateTime createAt = LocalDateTime.now();
+
         //  유저가 있으면 ID 만 등록 아니면 유저도 만들기
         Members membersFound = memberJpaRepository.findByEmail(email).orElseGet(() ->
                 memberJpaRepository.save(Members.builder()
@@ -84,6 +88,7 @@ public class LoginService {
                         .businessNumber(businessNumber)
                         .providerId(providerId)
                         .provider(provider)
+                        .createdAt(createAt) // 생성 시간 설정
                         .build()
                 ));
         return "회원가입이 완료되었습니다.";
