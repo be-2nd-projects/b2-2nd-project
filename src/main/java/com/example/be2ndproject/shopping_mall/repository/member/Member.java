@@ -1,4 +1,4 @@
-package com.example.be2ndproject.shopping_mall.repository.Member;
+package com.example.be2ndproject.shopping_mall.repository.member;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -16,7 +16,7 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "Members")
-public class Members {
+public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

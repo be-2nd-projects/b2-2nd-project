@@ -1,4 +1,4 @@
-package com.example.be2ndproject.shopping_mall.repository.Review;
+package com.example.be2ndproject.shopping_mall.repository.review;
 
 
 import jakarta.persistence.*;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "Reviews")
-public class Reviews {
+public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,4 +1,4 @@
-package com.example.be2ndproject.shopping_mall.repository.Images;
+package com.example.be2ndproject.shopping_mall.repository.Image;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "Images")
-public class Images {
+public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "image_id")

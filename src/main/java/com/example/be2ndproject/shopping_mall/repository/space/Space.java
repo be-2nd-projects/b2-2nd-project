@@ -1,6 +1,6 @@
-package com.example.be2ndproject.shopping_mall.repository.Space;
+package com.example.be2ndproject.shopping_mall.repository.space;
 
-import com.example.be2ndproject.shopping_mall.repository.Member.Members;
+import com.example.be2ndproject.shopping_mall.repository.member.Member;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "Spaces")
-public class Spaces {
+public class Space {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,7 @@ public class Spaces {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private Members user;
+    private Member user;
 
     @Column(name = "space_name")
     private String spaceName;

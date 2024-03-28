@@ -1,7 +1,7 @@
-package com.example.be2ndproject.shopping_mall.repository.Reservation;
+package com.example.be2ndproject.shopping_mall.repository.reservation;
 
-import com.example.be2ndproject.shopping_mall.repository.Member.Members;
-import com.example.be2ndproject.shopping_mall.repository.Space.Spaces;
+import com.example.be2ndproject.shopping_mall.repository.member.Member;
+import com.example.be2ndproject.shopping_mall.repository.space.Space;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "Reservations")
-public class Reservations {
+public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,11 +23,11 @@ public class Reservations {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private Members user;
+    private Member user;
 
     @ManyToOne
     @JoinColumn(name = "space_id", referencedColumnName = "space_id")
-    private Spaces space;
+    private Space space;
 
     @Column(name = "start_time")
     private LocalDateTime startTime;

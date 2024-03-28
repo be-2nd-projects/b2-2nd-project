@@ -1,4 +1,4 @@
-package com.example.be2ndproject.shopping_mall.repository.Cart;
+package com.example.be2ndproject.shopping_mall.repository.cart;
 import jakarta.persistence.*;
 import lombok.*;
 @Data

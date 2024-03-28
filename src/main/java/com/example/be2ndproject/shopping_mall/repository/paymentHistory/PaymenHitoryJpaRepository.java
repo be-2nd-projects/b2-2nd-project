@@ -1,4 +1,4 @@
-package com.example.be2ndproject.shopping_mall.repository.PaymentHistory;
+package com.example.be2ndproject.shopping_mall.repository.paymentHistory;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;

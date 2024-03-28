@@ -1,16 +1,16 @@
-package com.example.be2ndproject.shopping_mall.repository.Asks;
+package com.example.be2ndproject.shopping_mall.repository.ask;
 
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "Asks")
-public class Asks {
+public class Ask {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "qna_id")
@@ -23,13 +23,13 @@ public class Asks {
     private String content;
 
     @Column(name = "created_at", nullable = false)
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at", nullable = false)
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
     @Column(name = "deleted_at", nullable = false)
-    private Date deletedAt;
+    private LocalDateTime deletedAt;
 
     @Column(name = "space_id", nullable = false)
     private Integer spaceId;
