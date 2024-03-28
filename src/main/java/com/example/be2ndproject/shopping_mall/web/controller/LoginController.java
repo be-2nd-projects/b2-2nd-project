@@ -39,9 +39,9 @@ public class LoginController {
         String  signUpMessage  = loginService.signUp(signUpRequest);
 
         if (signUpMessage.equals("회원가입이 완료되었습니다.")) {
-            return ResponseEntity.ok().body(signUpMessage);
+            return ResponseEntity.ok().body(Collections.singletonMap("message", signUpMessage));
         } else {
-            return ResponseEntity.badRequest().body(signUpMessage);
+            return ResponseEntity.badRequest().body(Collections.singletonMap("error", signUpMessage));
         }
     }
 
@@ -63,10 +63,10 @@ public class LoginController {
 
     @Operation(summary = "로그아웃")
     @PostMapping(value = "/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
+    public void logout(HttpServletRequest request, HttpServletResponse response) {
         // 현재 사용자 로그아웃 처리
         customLogoutHandler.logout(request, response, null);
-        return "로그아웃 되었습니다.";
+        
     }
 
 //    @Operation(summary = "회원 탈퇴")

@@ -10,6 +10,7 @@ import com.example.be2ndproject.shopping_mall.repository.Reservation.Reservation
 import com.example.be2ndproject.shopping_mall.repository.Reservation.Reservations;
 import com.example.be2ndproject.shopping_mall.repository.Review.ReviewJpaRepository;
 import com.example.be2ndproject.shopping_mall.repository.Space.SpaceJpaRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -50,13 +51,14 @@ public class LoginService {
 
         // 비밀번호 생성 규칙 추가
         if (!isPasswordValid(password)) {
-            log.info("비밀번호는 영문자 숫자 특수문자 조합하여 8글자에서 20글자 미만으로 설정해주세요");
-            return "비밀번호는 영문자, 숫자, 특수문자를 조합하여 8글자에서 20글자 사이로 설정해주세요." ; // 비밀번호 생성 규칙에 맞지 않으면 회원가입 실패
+            log.info("error 비밀번호는 영문자 숫자 특수문자 조합하여 8글자에서 20글자 미만으로 설정해주세요");
+            return "비밀번호는 영문자, 숫자, 특수문자를 조합하여 8글자에서 20글자 사이로 설정해주세요."; // 비밀번호 생성 규칙에 맞지 않으면 회원가입 실패
         }
 
         // 이메일 중복 확인 기능 추가
         if (isEmailAlreadyRegistered(email)) {
-            return "이미 등록된 이메일입니다. 다른 이메일을 사용해주세요."; // 이미 등록된 이메일이면 회원가입 실패
+            log.info("error 이미 등록된 이메일입니다. 다른 이메일을 사용해주세요.");
+            return "이미 등록된 이메일입니다. 다른 이메일을 사용해주세요.";// 이미 등록된 이메일이면 회원가입 실패
         }
 
         // 비밀번호 암호화
