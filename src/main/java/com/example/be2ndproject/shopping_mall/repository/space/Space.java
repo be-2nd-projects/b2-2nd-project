@@ -2,13 +2,12 @@ package com.example.be2ndproject.shopping_mall.repository.space;
 
 import com.example.be2ndproject.shopping_mall.repository.member.Member;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -20,7 +19,7 @@ public class Space {
     @Column(name = "space_id")
     private Integer spaceId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private Member user;
 
@@ -59,6 +58,6 @@ public class Space {
     private String spaceStatus;
 
     @Column(name = "score")
-    private float score;
+    private Float score;
 
 }
