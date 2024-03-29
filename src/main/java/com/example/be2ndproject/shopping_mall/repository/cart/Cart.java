@@ -1,7 +1,12 @@
 package com.example.be2ndproject.shopping_mall.repository.cart;
+import com.example.be2ndproject.shopping_mall.repository.member.Member;
+import com.example.be2ndproject.shopping_mall.repository.space.Space;
 import jakarta.persistence.*;
 import lombok.*;
-@Data
+import org.apache.catalina.User;
+
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -12,11 +17,13 @@ public class Cart {
     @Column(name = "cart_id")
     private Integer cartId;
 
-    @Column(name = "user_id", nullable = false)
-    private Integer userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private Member member;
 
-    @Column(name = "space_id", nullable = false)
-    private Integer spaceId;
+    @ManyToOne
+    @JoinColumn(name = "space_id", nullable = false)
+    private Space space;
 
 
 }
