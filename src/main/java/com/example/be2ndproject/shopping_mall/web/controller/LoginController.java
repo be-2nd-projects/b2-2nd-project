@@ -75,12 +75,12 @@ public class LoginController {
 
     }
 
-//    @Operation(summary = "회원 탈퇴")
-//    @DeleteMapping(value="/resign")
-//    public ResponseEntity<String> resign(@RequestParam Integer userId) {
-//        loginService.deleteUser(userId);
-//        return ResponseEntity.ok("사용자가 성공적으로 탈퇴되었습니다.");
-//    }
+    @Operation(summary = "회원 탈퇴")
+    @DeleteMapping(value="/resign")
+    public ResponseEntity<String> resign(@RequestParam Integer userId) {
+        loginService.deleteUser(userId);
+        return ResponseEntity.ok("사용자가 성공적으로 탈퇴되었습니다.");
+    }
 
 
 

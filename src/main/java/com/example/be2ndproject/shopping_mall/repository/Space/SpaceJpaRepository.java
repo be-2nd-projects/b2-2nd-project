@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SpaceJpaRepository extends JpaRepository<Spaces,Integer> {
 
+    void deleteByUserId(Integer userId);
 }

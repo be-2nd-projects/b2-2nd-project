@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ReviewJpaRepository extends JpaRepository<Reviews,Integer> {
 
+    void deleteByUserId(Integer userId);
 }

@@ -34,7 +34,9 @@ public class LoginService {
     private final MemberJpaRepository memberJpaRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-
+    private final SpaceJpaRepository spaceJpaRepository;
+    private final ReservationJpaRepository reservationJpaRepository;
+    private final ReviewJpaRepository reviewJpaRepository;
 
 
     @Transactional(transactionManager = "tmJpa")
@@ -127,13 +129,13 @@ public class LoginService {
         return token; // 생성된 토큰 반환
     }
 
-//    @Transactional(transactionManager = "tmJpa")
-//    public void deleteUser(Integer userId) {
-//        memberJpaRepository.deleteById(userId);
-//        // 사용자와 관련된 다른 테이블의 레코드 삭제 (예: 공간 정보, 예약 정보 등)
-//        spaceJpaRepository.deleteByUserId(userId);
-//        reservationJpaRepository.deleteByUserId(userId);
-//        reviewJpaRepository.deleteByUserId(userId);
-//    }
+    @Transactional(transactionManager = "tmJpa")
+    public void deleteUser(Integer userId) {
+        memberJpaRepository.deleteById(userId);
+        // 사용자와 관련된 다른 테이블의 레코드 삭제 (예: 공간 정보, 예약 정보 등)
+        spaceJpaRepository.deleteByUserId(userId);
+        reservationJpaRepository.deleteByUserId(userId);
+        reviewJpaRepository.deleteByUserId(userId);
+    }
 }
 
