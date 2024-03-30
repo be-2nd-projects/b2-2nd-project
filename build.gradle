@@ -41,6 +41,8 @@ dependencies {
 
     // Swagger/OpenAPI
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+    implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+    implementation 'io.springfox:springfox-swagger2:3.0.0'
 
     // devtools 재실행 할 필요없이 코드 수정하면 바로 반영됨
     developmentOnly 'org.springframework.boot:spring-boot-devtools'

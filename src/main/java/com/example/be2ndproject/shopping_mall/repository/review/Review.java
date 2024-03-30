@@ -1,11 +1,15 @@
 package com.example.be2ndproject.shopping_mall.repository.review;
 
 
+import com.example.be2ndproject.shopping_mall.repository.member.Member;
+import com.example.be2ndproject.shopping_mall.repository.space.Space;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,10 +31,12 @@ public class Review {
     @Column(name = "score", nullable = false)
     private Float score;
 
-    @Column(name = "space_id", nullable = false)
-    private Long spaceId;
+    @ManyToOne
+    @JoinColumn(name = "space_id")
+    private Space space;
 
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Member member;
 
 }

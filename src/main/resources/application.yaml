@@ -7,7 +7,7 @@ spring:
   security:
     user:
       name: user
-      password: 1234
+      password: aws19950630!
   datasource:
     username: ${DATABASE_USERNAME} # 환경변수에 설정함 DATABASE_USERNAME=root;
     password: ${DATABASE_PASSWORD} # 환경변수에 설정함 DATABASE_PASSWORD= *****;
@@ -31,7 +31,7 @@ logging:
     org.hibernate.stat: ERROR
 
 jwt:
-  secret-key-source: ${JWT_SECRET_KEY}  #{JWT_SECRET_KEY} = super-coding ????? ????
+  secret-key-source: ${JWT_SECRET_KEY} = super-coding  #{JWT_SECRET_KEY} = super-coding ????? ????
 
 
 #  Server Port ??:
