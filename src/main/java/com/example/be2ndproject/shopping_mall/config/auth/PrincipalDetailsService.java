@@ -1,6 +1,6 @@
 package com.example.be2ndproject.shopping_mall.config.auth;
-import com.example.be2ndproject.shopping_mall.repository.Member.MemberJpaRepository;
-import com.example.be2ndproject.shopping_mall.repository.Member.Members;
+import com.example.be2ndproject.shopping_mall.repository.member.MemberJpaRepository;
+import com.example.be2ndproject.shopping_mall.repository.member.Member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,8 +19,8 @@ public class PrincipalDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         log.info("PrincipalDetailsService의 loadUserByUsername()");
-        Members membersJwtEntity = memberJpaRepository.findByEmail(email).orElseThrow(()->new UsernameNotFoundException("사용자를 찾을수 없습니다."));
-        log.info(String.valueOf(membersJwtEntity));
-        return new PrincipalDetails(membersJwtEntity);
+        Member memberJwtEntity = memberJpaRepository.findByEmail(email).orElseThrow(()->new UsernameNotFoundException("사용자를 찾을수 없습니다."));
+        log.info(String.valueOf(memberJwtEntity));
+        return new PrincipalDetails(memberJwtEntity);
     }
 }
