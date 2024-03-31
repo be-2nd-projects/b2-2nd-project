@@ -107,13 +107,8 @@ public class LoginService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // JWT 토큰 생성
-        return jwtTokenProvider.createToken(email);
+        return email;
 
-    }
-
-    public String createToken(String email) {
-        String token = jwtTokenProvider.createToken(email); // 토큰 생성 및 변수에 저장
-        return token; // 생성된 토큰 반환
     }
 
 //    @Transactional(transactionManager = "tmJpa")

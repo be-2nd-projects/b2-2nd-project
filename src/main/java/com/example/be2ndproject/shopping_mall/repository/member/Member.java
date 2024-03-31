@@ -66,7 +66,7 @@ public class Member {
     @Column(name = "provider")
     private String provider;
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Cart> carts = new ArrayList<>();
 
     public List<String> getRoleList(){

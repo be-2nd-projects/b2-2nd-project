@@ -12,7 +12,7 @@ spring:
     username: ${DATABASE_USERNAME} # 환경변수에 설정함 DATABASE_USERNAME=root;
     password: ${DATABASE_PASSWORD} # 환경변수에 설정함 DATABASE_PASSWORD= *****;
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://project-1.c5mic2ksgw7b.ap-northeast-2.rds.amazonaws.com:3306/innodb
+    url: jdbc:mariadb://project-1.c5mic2ksgw7b.ap-northeast-2.rds.amazonaws.com:3306/innodb?useUnicode=true&characterEncoding=utf8mb4
 jpa:
   hibernate:
     ddl-auto: update

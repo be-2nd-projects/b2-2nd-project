@@ -47,6 +47,7 @@ public class JwtTokenProvider {
     }
 
     public String createToken(String email) {
+        log.info("Creating token for email: {}", email);
         Date now = new Date();
 
         return Jwts.builder()

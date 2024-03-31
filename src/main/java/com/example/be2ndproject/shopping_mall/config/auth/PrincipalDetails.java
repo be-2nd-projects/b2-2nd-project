@@ -42,6 +42,10 @@ public class PrincipalDetails implements UserDetails {
     } // 사용자에게 부여된 권한을 반환하는 메서드
 
 
+    public Integer getId() {
+        return member.getUserId();
+    }
+
     @Override
     public String getPassword() {
         return member.getPassword();
