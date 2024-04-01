@@ -4,6 +4,8 @@ package com.example.be2ndproject.shopping_mall.service;
 import com.example.be2ndproject.shopping_mall.config.JWT.JwtTokenProvider;
 import com.example.be2ndproject.shopping_mall.dto.auth.Login;
 import com.example.be2ndproject.shopping_mall.dto.auth.SignUp;
+import com.example.be2ndproject.shopping_mall.repository.member.MemberJpaRepository;
+import com.example.be2ndproject.shopping_mall.repository.member.Member;
 import com.example.be2ndproject.shopping_mall.repository.Member.MemberJpaRepository;
 import com.example.be2ndproject.shopping_mall.repository.Member.Members;
 import com.example.be2ndproject.shopping_mall.repository.Reservation.ReservationJpaRepository;
@@ -78,8 +80,8 @@ public class LoginService {
         LocalDateTime createAt = LocalDateTime.now();
 
         //  유저가 있으면 ID 만 등록 아니면 유저도 만들기
-        Members membersFound = memberJpaRepository.findByEmail(email).orElseGet(() ->
-                memberJpaRepository.save(Members.builder()
+        Member memberFound = memberJpaRepository.findByEmail(email).orElseGet(() ->
+                memberJpaRepository.save(Member.builder()
                         .name(name)
                         .email(email)
                         .password(encodedPassword) // 암호화된 비밀번호 저장
@@ -106,7 +108,7 @@ public class LoginService {
     // 이메일 중복 확인 메서드
     private boolean isEmailAlreadyRegistered(String email) {
         // 이미 등록된 이메일인지 확인하는 로직을 작성하여 반환
-        Optional<Members> existingMember = memberJpaRepository.findByEmail(email);
+        Optional<Member> existingMember = memberJpaRepository.findByEmail(email);
         return existingMember.isPresent();
     }
 

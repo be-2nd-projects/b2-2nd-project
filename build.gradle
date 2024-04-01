@@ -32,9 +32,9 @@ dependencies {
     //lombok
     compileOnly 'org.projectlombok:lombok'
 
+
     // MariaDB JDBC Driver
     implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.2'
-
 //    // MySQL JDBC Driver
 //    implementation 'com.mysql:mysql-connector-j:8.3.0'
 

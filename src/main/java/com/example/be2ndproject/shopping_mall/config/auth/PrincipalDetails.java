@@ -6,15 +6,13 @@ package com.example.be2ndproject.shopping_mall.config.auth;
 // Authentication 안에 User 정보가 있어야 됨
 // User 오브젝트 타입 => UserDetails 타입 객체
 
-import com.example.be2ndproject.shopping_mall.repository.Member.Members;
+import com.example.be2ndproject.shopping_mall.repository.member.Member;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
 
 // Security Session => Authentication => UserDetails (PrincipalDetails)
 
@@ -22,13 +20,13 @@ import java.util.Map;
 @Data
 public class PrincipalDetails implements UserDetails {
 
-    private Members members;
+    private Member member;
 //    private Map<String,Object> attributes;
 
 
     // 일반로그인
-    public PrincipalDetails(Members members){
-        this.members = members;
+    public PrincipalDetails(Member member){
+        this.member = member;
     }
 
 
@@ -37,7 +35,7 @@ public class PrincipalDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        members.getRoleList().forEach(r->{
+        member.getRoleList().forEach(r->{
             authorities.add(()->r);
         });
         return authorities;
@@ -46,12 +44,12 @@ public class PrincipalDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return members.getPassword();
+        return member.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return members.getEmail();
+        return member.getEmail();
     }
 
 
