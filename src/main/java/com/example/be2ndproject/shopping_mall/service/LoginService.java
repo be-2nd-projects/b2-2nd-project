@@ -110,20 +110,17 @@ public class LoginService {
         return existingMember.isPresent();
     }
 
-    public String login(Login loginRequest) {
+    public String login(Login loginRequest) throws Exception {
         String email = loginRequest.getEmail();
         String password = loginRequest.getPassword();
 
-        try {
             // 인증 시도
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(email, password));
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
         // JWT 토큰 생성
         return jwtTokenProvider.createToken(email);
     }

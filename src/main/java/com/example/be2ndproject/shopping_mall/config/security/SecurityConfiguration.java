@@ -48,8 +48,16 @@ public class SecurityConfiguration {
                                 .requestMatchers("/v1/api/host/**").hasRole("HOST")                     //host 페이지는 host권한을 가진 사람만 접근가능
                                 .requestMatchers("/v1/api/sign", "/v1/api/login", "/v2/api-docs",
                                         "/configuration/ui", "/swagger-resources/**", "/configuration/security",
-                                        "/swagger-ui/**", "/webjars/**", "/swagger/**").permitAll() // 회원가입, 로그인 경로는 모두에게 허용 Swagger 문서 관련 경로는 모두에게 허용
+                                        "/swagger-ui/**", "/webjars/**", "/swagger/**","/oauth2/**").permitAll() // 회원가입, 로그인 경로는 모두에게 허용 Swagger 문서 관련 경로는 모두에게 허용
                                 .anyRequest().permitAll()) // 그 외 모든 요청은 인증을 필요로 함
+//                        .oauth2Login(oauth2Login -> oauth2Login
+//                                .authorizationEndpoint().baseUri("/oauth2/authorize") // 소셜 로그인 url
+//                        .authorizationRequestRepository(cookieAuthorizationRequestRepository)
+//                                .redirectionEndpoint().baseUri("/oauth2/callback/*") // 소셜 인증 후 redirect url// 인증 요청을 cookie 에 저장
+//                                .userInfoEndpoint().userService(customOAuth2UserService)  // 회원 정보 처리
+//                                .successHandler(oAuth2AuthenticationSuccessHandler)
+//                                .failureHandler(oAuth2AuthenticationFailureHandler))
+
                 .logout(logout -> logout.logoutUrl("/v1/api/logout") // 로그아웃 설정 ,  로그아웃 처리 URL
                         .invalidateHttpSession(true) // 세션 무효화
                         .deleteCookies("JSESSIONID") // 쿠키 삭제

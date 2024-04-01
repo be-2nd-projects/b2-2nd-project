@@ -11,8 +11,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,7 +43,7 @@ public class LoginController {
         if (signUpMessage.equals("회원가입이 완료되었습니다.")) {
             String message = signUpRequest.getName() + " 님이 " + signUpMessage; // 메시지 조합
             response.put("message", message);
-            log.info(signUpRequest.getName()+"님이 회원가입이 완료되었습니다.");
+            log.info(signUpRequest.getName() + "님이 회원가입이 완료되었습니다.");
             return ResponseEntity.ok().body(response);
         } else {
             return ResponseEntity.badRequest().body(Collections.singletonMap("error", signUpMessage));
@@ -50,23 +53,33 @@ public class LoginController {
     @Operation(summary = "로그인")
     @PostMapping(value = "/login")
     public ResponseEntity<?> login(@RequestBody Login loginRequest, HttpServletResponse httpServletResponse) {
+        try {
+            // 로그인 시도 및 JWT 토큰 생성
+            String token = loginService.login(loginRequest);
 
-        // 로그인 시도 및 JWT 토큰 생성
-        String token = loginService.login(loginRequest);
+            // 로그인한 사용자의 프로필 이미지 URL 가져오기
+            String profileImageUrl = loginService.getProfileImageUrl(loginRequest.getEmail());
 
-        // 로그인한 사용자의 프로필 이미지 URL 가져오기
-        String profileImageUrl = loginService.getProfileImageUrl(loginRequest.getEmail());
+            Map<String, String> responseBody = new HashMap<>();
+            responseBody.put("message", "로그인이 성공적으로 완료되었습니다.");
+            responseBody.put("profileImageUrl", profileImageUrl);
 
-        Map<String, String> responseBody = new HashMap<>();
-        responseBody.put("message", "로그인이 성공적으로 완료되었습니다.");
-        responseBody.put("profileImageUrl", profileImageUrl);
+            // 토큰을 HTTP 헤더에 추가
+            httpServletResponse.setHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + token);
+            log.info("jwt 토큰 :" + token);
+            log.info("로그인이 성공적으로 완료되었습니다.");
 
-        httpServletResponse.setHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + token);
-        log.info("jwt 토큰 :" + token);
-        log.info("로그인이 성공적으로 완료되었습니다.");
-
-        // 로그인 성공 응답 반환
-        return ResponseEntity.ok(responseBody);
+            // 로그인 성공 응답 반환
+            return ResponseEntity.ok(responseBody);
+        } catch (BadCredentialsException e) {
+            Map<String, String> errorBody = new HashMap<>();
+            errorBody.put("error", "이메일 또는 비밀번호가 올바르지 않습니다.");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorBody);
+        } catch (Exception e) {
+            Map<String, String> errorBody = new HashMap<>();
+            errorBody.put("error", "로그인 처리 중 문제가 발생했습니다.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorBody);
+        }
     }
 
     @Operation(summary = "로그아웃")
