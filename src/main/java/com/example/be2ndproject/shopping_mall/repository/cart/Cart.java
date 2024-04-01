@@ -19,7 +19,7 @@ public class Cart {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private Member user;
+    private Member member;
 
     @ManyToOne
     @JoinColumn(name = "space_id", nullable = false)
