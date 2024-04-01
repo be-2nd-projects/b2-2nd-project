@@ -1,4 +1,4 @@
-package com.example.be2ndproject.shopping_mall.repository.space;
+package com.example.be2ndproject.shopping_mall.repository.Space;
 
 import com.example.be2ndproject.shopping_mall.repository.member.Member;
 import jakarta.persistence.*;
@@ -21,7 +21,7 @@ public class Space {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private Member user;
+    private Member member;
 
     @Column(name = "space_name")
     private String spaceName;

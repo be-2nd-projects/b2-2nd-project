@@ -1,6 +1,7 @@
 package com.example.be2ndproject.shopping_mall.repository.member;
 
 import com.example.be2ndproject.shopping_mall.repository.cart.Cart;
+import com.example.be2ndproject.shopping_mall.repository.review.Review;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,7 +12,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -67,7 +69,10 @@ public class Member {
     private String provider;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-    private List<Cart> carts = new ArrayList<>();
+    private final List<Cart> carts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private final List<Review> reviews = new ArrayList<>();
 
     public List<String> getRoleList(){
         if (this.roles.length() > 0){
@@ -75,4 +80,6 @@ public class Member {
         }
         return new ArrayList<>();
     }
+
+
 }

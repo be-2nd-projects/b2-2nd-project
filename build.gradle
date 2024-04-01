@@ -35,6 +35,10 @@ dependencies {
 
     // MariaDB JDBC Driver
     implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.2'
+
+    // https://mvnrepository.com/artifact/org.json/json
+    implementation group: 'org.json', name: 'json', version: '20230227'
+
 //    // MySQL JDBC Driver
 //    implementation 'com.mysql:mysql-connector-j:8.3.0'
 

@@ -20,7 +20,9 @@ public class CartController {
 
     // 장바구니 항목 추가
     @PostMapping("/add")
-    public ResponseEntity<Void> addToCart()
+    public ResponseEntity<Void> addToCart(){
+        return null;
+    }
 
     // 장바구니 조회
 

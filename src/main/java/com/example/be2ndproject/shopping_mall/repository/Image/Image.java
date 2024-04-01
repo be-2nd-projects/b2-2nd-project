@@ -2,7 +2,8 @@ package com.example.be2ndproject.shopping_mall.repository.Image;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

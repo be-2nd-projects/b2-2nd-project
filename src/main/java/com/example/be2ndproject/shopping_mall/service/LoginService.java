@@ -6,13 +6,11 @@ import com.example.be2ndproject.shopping_mall.dto.auth.Login;
 import com.example.be2ndproject.shopping_mall.dto.auth.SignUp;
 import com.example.be2ndproject.shopping_mall.repository.member.MemberJpaRepository;
 import com.example.be2ndproject.shopping_mall.repository.member.Member;
-import com.example.be2ndproject.shopping_mall.repository.Member.MemberJpaRepository;
-import com.example.be2ndproject.shopping_mall.repository.Member.Members;
-import com.example.be2ndproject.shopping_mall.repository.Reservation.ReservationJpaRepository;
-import com.example.be2ndproject.shopping_mall.repository.Reservation.Reservations;
-import com.example.be2ndproject.shopping_mall.repository.Review.ReviewJpaRepository;
 import com.example.be2ndproject.shopping_mall.repository.Space.SpaceJpaRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.be2ndproject.shopping_mall.repository.reservation.ReservationJpaRepository;
+
+import com.example.be2ndproject.shopping_mall.repository.review.ReviewJpaRepository;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -116,28 +114,52 @@ public class LoginService {
         String email = loginRequest.getEmail();
         String password = loginRequest.getPassword();
 
-        // 인증 시도
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(email, password));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        try {
+            // 인증 시도
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(email, password));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
 
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         // JWT 토큰 생성
         return jwtTokenProvider.createToken(email);
-
     }
 
-    public String createToken(String email) {
-        String token = jwtTokenProvider.createToken(email); // 토큰 생성 및 변수에 저장
-        return token; // 생성된 토큰 반환
-    }
 
     @Transactional(transactionManager = "tmJpa")
-    public void deleteUser(Integer userId) {
-        memberJpaRepository.deleteById(userId);
-        // 사용자와 관련된 다른 테이블의 레코드 삭제 (예: 공간 정보, 예약 정보 등)
-        spaceJpaRepository.deleteByUserId(userId);
-        reservationJpaRepository.deleteByUserId(userId);
-        reviewJpaRepository.deleteByUserId(userId);
+    public void deleteUserByEmail(String userEmail) {
+        // 이메일을 기반으로 회원 정보를 조회하여 삭제
+        Optional<Member> member = memberJpaRepository.findByEmail(userEmail);
+        if (member.isPresent()) {
+            // 회원 정보가 존재하면 삭제
+            Member existingMember = member.get();
+            spaceJpaRepository.deleteByMember(Optional.of(existingMember));
+            reservationJpaRepository.deleteByMember(Optional.of(existingMember));
+            reviewJpaRepository.deleteByMember(Optional.of(existingMember));
+            memberJpaRepository.delete(existingMember);
+        } else {
+            // 회원 정보가 존재하지 않는 경우 예외 처리 또는 적절한 응답 반환
+            throw new RuntimeException("회원 정보를 찾을 수 없습니다.");
+        }
+    }
+
+
+    public String getProfileImageUrl(String email) {
+        // 이메일을 기반으로 회원 정보 조회
+        Optional<Member> memberOptional = memberJpaRepository.findByEmail(email);
+
+        // 회원 정보가 존재하는지 확인
+        if (memberOptional.isPresent()) {
+            Member member = memberOptional.get();
+            // 회원의 프로필 이미지 URL 반환
+            return member.getProfileImageUrl();
+        } else {
+            // 회원 정보가 존재하지 않는 경우
+            return "회원가입 시 이미지 파일을 저장하지 않았습니다.";
+        }
     }
 }
 

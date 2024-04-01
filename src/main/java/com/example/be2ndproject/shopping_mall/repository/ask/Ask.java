@@ -1,4 +1,4 @@
-package com.example.be2ndproject.shopping_mall.repository.Asks;
+package com.example.be2ndproject.shopping_mall.repository.ask;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -6,7 +6,8 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

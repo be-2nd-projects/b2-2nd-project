@@ -24,6 +24,8 @@ public class PrincipalDetails implements UserDetails {
 //    private Map<String,Object> attributes;
 
 
+
+
     // 일반로그인
     public PrincipalDetails(Member member){
         this.member = member;
