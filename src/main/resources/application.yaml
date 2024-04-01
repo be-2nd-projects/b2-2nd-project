@@ -31,7 +31,7 @@ logging:
     org.hibernate.stat: ERROR
 
 jwt:
-  secret-key-source: ${JWT_SECRET_KEY} = super-coding  #{JWT_SECRET_KEY} = super-coding ????? ????
+  secret-key-source: ${JWT_SECRET_KEY}  #{JWT_SECRET_KEY} = super-coding ????? ????
 
 
 #  Server Port ??:

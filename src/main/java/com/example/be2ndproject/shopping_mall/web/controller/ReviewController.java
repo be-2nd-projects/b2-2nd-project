@@ -29,5 +29,13 @@ public class ReviewController {
         return reviewService.findAllReview();
     }
 
+    // 리뷰 삭제
+//    @DeleteMapping("/review/{reviewId}")
+//    public ReviewDto deleteReview (@PathVariable Integer reviewId,
+//                                   @AuthenticationPrincipal PrincipalDetails principalDetails) {
+//        return reviewService.deleteReview(reviewId, principalDetails);
+//    }
+
+
 
 }
