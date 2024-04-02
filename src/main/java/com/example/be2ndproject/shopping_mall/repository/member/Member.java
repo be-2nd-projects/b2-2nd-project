@@ -1,5 +1,6 @@
 package com.example.be2ndproject.shopping_mall.repository.member;
 
+import com.example.be2ndproject.shopping_mall.repository.account.Account;
 import com.example.be2ndproject.shopping_mall.repository.cart.Cart;
 import jakarta.persistence.*;
 import lombok.*;
@@ -65,6 +66,9 @@ public class Member {
 
     @Column(name = "provider")
     private String provider;
+
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    Account account;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Cart> carts = new ArrayList<>();
