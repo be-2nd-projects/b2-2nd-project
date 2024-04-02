@@ -1,12 +1,12 @@
 package com.example.be2ndproject.shopping_mall.repository.review;
 
 
+import com.example.be2ndproject.shopping_mall.repository.member.Member;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -30,7 +30,9 @@ public class Review {
     @Column(name = "space_id", nullable = false)
     private Long spaceId;
 
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private Member member; // Member와의 관계 설정
+
 
 }

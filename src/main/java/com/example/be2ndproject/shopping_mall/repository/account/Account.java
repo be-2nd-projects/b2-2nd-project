@@ -3,7 +3,8 @@ package com.example.be2ndproject.shopping_mall.repository.account;
 import com.example.be2ndproject.shopping_mall.repository.member.Member;
 import jakarta.persistence.*;
 import lombok.*;
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

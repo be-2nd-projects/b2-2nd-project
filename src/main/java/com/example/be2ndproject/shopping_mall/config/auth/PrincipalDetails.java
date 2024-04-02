@@ -25,18 +25,17 @@ public class PrincipalDetails implements UserDetails {
 
 
     // 일반로그인
-    public PrincipalDetails(Member member){
+    public PrincipalDetails(Member member) {
         this.member = member;
     }
-
 
 
     // jwt토큰 사용시
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        member.getRoleList().forEach(r->{
-            authorities.add(()->r);
+        member.getRoleList().forEach(r -> {
+            authorities.add(() -> r);
         });
         return authorities;
     } // 사용자에게 부여된 권한을 반환하는 메서드

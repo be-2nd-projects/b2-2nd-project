@@ -15,6 +15,7 @@ import java.util.List;
 @RequestMapping("v1/api/cart")
 public class CartController {
 
+    @Autowired
     private final CartService cartService;
 
     public CartController(CartService cartService) {
