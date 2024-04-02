@@ -1,5 +1,5 @@
 package com.example.be2ndproject.shopping_mall.repository.cart;
-import com.example.be2ndproject.shopping_mall.repository.Space.Space;
+import com.example.be2ndproject.shopping_mall.repository.space.Space;
 import com.example.be2ndproject.shopping_mall.repository.member.Member;
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,6 +24,4 @@ public class Cart {
     @ManyToOne
     @JoinColumn(name = "space_id", nullable = false)
     private Space space;
-
-
 }

@@ -4,7 +4,6 @@ import com.example.be2ndproject.shopping_mall.dto.PaymentRequestDto;
 import com.example.be2ndproject.shopping_mall.dto.PaymentResponseDto;
 import com.example.be2ndproject.shopping_mall.repository.payment.Payment;
 import com.example.be2ndproject.shopping_mall.repository.payment.PaymentJpaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

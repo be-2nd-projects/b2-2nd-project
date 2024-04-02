@@ -1,6 +1,6 @@
 package com.example.be2ndproject.shopping_mall.repository.reservation;
 
-import com.example.be2ndproject.shopping_mall.repository.Space.Space;
+import com.example.be2ndproject.shopping_mall.repository.space.Space;
 import com.example.be2ndproject.shopping_mall.repository.member.Member;
 
 import jakarta.persistence.*;
@@ -46,5 +46,8 @@ public class Reservation {
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
+
+    @Column(name = "user_num")
+    private int userNum;
 
 }

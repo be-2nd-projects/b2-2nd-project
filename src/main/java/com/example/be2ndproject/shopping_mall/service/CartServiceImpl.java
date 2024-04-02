@@ -26,14 +26,14 @@ public class CartServiceImpl implements CartService {
     public CartDto addToCart(CartDto cartDto) {
 
         // 사용자랑 공간 조회
-        Member user = memberJpaRepository.findById(cartDto.getUserId())
+        Member member = memberJpaRepository.findById(cartDto.getUserId())
                 .orElseThrow(() -> new RuntimeException("사용자를 찾지 못했습니다. ID : " + cartDto.getUserId()));
         Space space = spaceJpaRepository.findById(cartDto.getSpaceId())
                 .orElseThrow(() -> new RuntimeException("공간정보를 찾지 못했습니다. ID : " + cartDto.getSpaceId()));
 
         // 엔티티 생성 및 초기화
         Cart cart = new Cart();
-        cart.setUser(user);
+        cart.setMember(member);
         cart.setSpace(space);
 
         // 카트 저장
@@ -42,7 +42,7 @@ public class CartServiceImpl implements CartService {
         // 새 Dto 생성하여 반환
         CartDto savedCartDto = new CartDto();
         savedCartDto.setCartId(savedCart.getCartId());
-        savedCartDto.setUserId(user.getUserId());
+        savedCartDto.setUserId(member.getUserId());
         savedCartDto.setSpaceId(space.getSpaceId());
 
         return savedCartDto;
@@ -52,7 +52,7 @@ public class CartServiceImpl implements CartService {
     public List<CartDto> getCartItemsByUserId(Integer userId) {
 
         // 사용자 Id에 해당하는 카트 아이템 전부 조회
-        List<Cart> carts = cartJpaRepository.findAllByUser_UserId(userId);
+        List<Cart> carts = cartJpaRepository.findAllByMember_UserId(userId);
 
         // 카트 엔티티 리스트를 CartDto 리스트로 변환(공간명만 가져오게 함. 필요시 set, get 추가)
         return carts.stream().map(cart -> {

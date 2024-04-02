@@ -1,4 +1,4 @@
-package com.example.be2ndproject.shopping_mall.repository.Space;
+package com.example.be2ndproject.shopping_mall.repository.space;
 
 import com.example.be2ndproject.shopping_mall.repository.member.Member;
 import com.example.be2ndproject.shopping_mall.repository.review.Review;

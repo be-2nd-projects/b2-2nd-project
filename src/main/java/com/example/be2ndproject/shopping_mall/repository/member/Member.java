@@ -69,10 +69,10 @@ public class Member {
     @Column(name = "provider")
     private String provider;
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
     Account account;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
     private List<Cart> carts = new ArrayList<>();
 
     public List<String> getRoleList(){

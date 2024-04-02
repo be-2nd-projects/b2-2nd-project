@@ -21,5 +21,5 @@ public class Account {
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
-    Member user;
+    Member member;
 }

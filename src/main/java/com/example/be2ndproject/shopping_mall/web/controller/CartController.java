@@ -3,9 +3,7 @@ package com.example.be2ndproject.shopping_mall.web.controller;
 import com.example.be2ndproject.shopping_mall.config.auth.PrincipalDetails;
 import com.example.be2ndproject.shopping_mall.dto.CartDto;
 import com.example.be2ndproject.shopping_mall.service.CartService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +13,6 @@ import java.util.List;
 @RequestMapping("v1/api/cart")
 public class CartController {
 
-    @Autowired
     private final CartService cartService;
 
     public CartController(CartService cartService) {
@@ -24,8 +21,7 @@ public class CartController {
 
     // 장바구니 항목 추가
     @PostMapping("/add")
-    public ResponseEntity<CartDto> addToCart(@RequestBody CartDto cartDto, @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        cartDto.setUserId(principalDetails.getMember().getUserId());
+    public ResponseEntity<CartDto> addToCart(@RequestBody CartDto cartDto) {
         CartDto newCart = cartService.addToCart(cartDto);
         return ResponseEntity.ok(newCart);
     }

@@ -6,7 +6,7 @@ import com.example.be2ndproject.shopping_mall.dto.auth.Login;
 import com.example.be2ndproject.shopping_mall.dto.auth.SignUp;
 import com.example.be2ndproject.shopping_mall.repository.member.MemberJpaRepository;
 import com.example.be2ndproject.shopping_mall.repository.member.Member;
-import com.example.be2ndproject.shopping_mall.repository.Space.SpaceJpaRepository;
+import com.example.be2ndproject.shopping_mall.repository.space.SpaceJpaRepository;
 import com.example.be2ndproject.shopping_mall.repository.reservation.ReservationJpaRepository;
 
 import com.example.be2ndproject.shopping_mall.repository.review.ReviewJpaRepository;
