@@ -42,9 +42,9 @@ public class AskService {
         Member member = memberJpaRepository.findByEmail(createAskDTO.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("유저를 찾을 수 없습니다. Email : " + createAskDTO.getEmail()));
 
-        //대여한 곳의 정보를 DB에서 조회
+        //대여한 공간의 정보를 DB에서 조회
         Space space = spaceJpaRepository.findById(createAskDTO.getSpaceId())
-                .orElseThrow(() -> new IllegalArgumentException("조회하신 대여점을 찾을 수 없습니다. space : " + createAskDTO.getSpaceId()));
+                .orElseThrow(() -> new IllegalArgumentException("조회하신 공간을 찾을 수 없습니다. space : " + createAskDTO.getSpaceId()));
 
         // 문의글 작성
         Ask ask = new Ask(createAskDTO.getTitle(), createAskDTO.getContent(), LocalDateTime.now(), LocalDateTime.now(), member, space);
