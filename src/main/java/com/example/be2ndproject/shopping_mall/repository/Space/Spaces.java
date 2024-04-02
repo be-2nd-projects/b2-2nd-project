@@ -1,12 +1,12 @@
 package com.example.be2ndproject.shopping_mall.repository.Space;
 
 import com.example.be2ndproject.shopping_mall.repository.Member.Members;
-import jakarta.persistence.*;
+import lombok.Setter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDateTime;
+import jakarta.persistence.*;
 
 @Data
 @AllArgsConstructor
@@ -61,4 +61,7 @@ public class Spaces {
     @Column(name = "score")
     private float score;
 
+    @Setter
+    @Column(name = "stock")
+    private int stock;
 }
