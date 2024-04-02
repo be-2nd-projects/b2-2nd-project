@@ -81,5 +81,16 @@ public class Member {
         return new ArrayList<>();
     }
 
+    @Builder
+    public Member(String name, String password, String email, String roles, String provider, String providerId, LocalDateTime createdAt) {
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.roles = roles;
+        this.provider = provider;
+        this.providerId = providerId;
+        this.createdAt = createdAt;
+    }
+
 
 }

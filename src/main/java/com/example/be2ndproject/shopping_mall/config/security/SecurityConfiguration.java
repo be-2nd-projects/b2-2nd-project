@@ -3,6 +3,7 @@ package com.example.be2ndproject.shopping_mall.config.security;
 import com.example.be2ndproject.shopping_mall.config.JWT.JwtAuthenticationFilter;
 
 import com.example.be2ndproject.shopping_mall.config.JWT.JwtTokenProvider;
+import com.example.be2ndproject.shopping_mall.config.oauth.PrincipalOauth2UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -26,6 +27,7 @@ public class SecurityConfiguration {
     private final CorsConfig corsConfig;
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationConfiguration authenticationConfiguration;
+    private final PrincipalOauth2UserService principalOauth2UserService;
 
 
     // SecurityFilterChain 빈을 등록하여 HTTP 요청에 대한 보안 필터 체인을 구성
@@ -44,19 +46,21 @@ public class SecurityConfiguration {
 
                         authorize
                                 .requestMatchers("/v1/api/logout").authenticated() // 로그아웃은 인증된 사용자에게만 허용
-                                .requestMatchers("/v1/api/guest/**").hasAnyRole("GUEST", "HOST") //guest 페이지는 guest,host권한을 가진 사람 둘다 접근가능
-                                .requestMatchers("/v1/api/host/**").hasRole("HOST")                     //host 페이지는 host권한을 가진 사람만 접근가능
+                                .requestMatchers("/v1/api/guest/**").hasAnyRole("USER_GUEST", "USER_HOST") //guest 페이지는 guest,host권한을 가진 사람 둘다 접근가능
+                                .requestMatchers("/v1/api/host/**").hasRole("USER_HOST")                     //host 페이지는 host권한을 가진 사람만 접근가능
                                 .requestMatchers("/v1/api/sign", "/v1/api/login", "/v2/api-docs",
                                         "/configuration/ui", "/swagger-resources/**", "/configuration/security",
                                         "/swagger-ui/**", "/webjars/**", "/swagger/**","/oauth2/**").permitAll() // 회원가입, 로그인 경로는 모두에게 허용 Swagger 문서 관련 경로는 모두에게 허용
                                 .anyRequest().permitAll()) // 그 외 모든 요청은 인증을 필요로 함
-//                        .oauth2Login(oauth2Login -> oauth2Login
-//                                .authorizationEndpoint().baseUri("/oauth2/authorize") // 소셜 로그인 url
-//                        .authorizationRequestRepository(cookieAuthorizationRequestRepository)
-//                                .redirectionEndpoint().baseUri("/oauth2/callback/*") // 소셜 인증 후 redirect url// 인증 요청을 cookie 에 저장
-//                                .userInfoEndpoint().userService(customOAuth2UserService)  // 회원 정보 처리
-//                                .successHandler(oAuth2AuthenticationSuccessHandler)
-//                                .failureHandler(oAuth2AuthenticationFailureHandler))
+
+                        .oauth2Login(oauthLogin -> {
+                            oauthLogin
+                                    .loginPage("http://localhost:3000/v1/api/login") // 권한 접근 실패 시 로그인 페이지로 이동
+                                    .defaultSuccessUrl("http://localhost:3000/v1/api") // 로그인 성공 시 이동할 페이지
+                                   .failureUrl("/oauth2/authorization/google") // 로그인 실패 시 이동 페이지
+                                    .userInfoEndpoint(userInfoEndpoint ->
+                                            userInfoEndpoint.userService(principalOauth2UserService));
+                        })
 
                 .logout(logout -> logout.logoutUrl("/v1/api/logout") // 로그아웃 설정 ,  로그아웃 처리 URL
                         .invalidateHttpSession(true) // 세션 무효화

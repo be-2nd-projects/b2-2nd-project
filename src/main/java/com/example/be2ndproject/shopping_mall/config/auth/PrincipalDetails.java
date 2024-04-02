@@ -10,22 +10,30 @@ import com.example.be2ndproject.shopping_mall.repository.member.Member;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 // Security Session => Authentication => UserDetails (PrincipalDetails)
 
 // Authentication 객체에 저장할 수 있는 유일한 타입
 @Data
-public class PrincipalDetails implements UserDetails {
+public class PrincipalDetails implements UserDetails , OAuth2User {
 
     private Member member;
-//    private Map<String,Object> attributes;
+    private Map<String,Object> attributes;
 
 
     // 일반로그인
     public PrincipalDetails(Member member) {
+        this.member = member;
+    }
+
+    // OAuth 로그인
+    public PrincipalDetails(Member member,Map<String,Object> attributes){
+        this.attributes = attributes;
         this.member = member;
     }
 
@@ -78,5 +86,17 @@ public class PrincipalDetails implements UserDetails {
 
         return true;
     } // 계정이 활성화 상태인지 확인하는 메서드
+
+    //OAuth2User (리소스 서버로 부터 받는 회원정보)
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
+
+    // Member의  PrimaryKey
+    @Override
+    public String getName() {
+        return member.getUserId()+"";
+    }
 
 }
