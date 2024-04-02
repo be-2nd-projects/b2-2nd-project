@@ -40,7 +40,7 @@ public class ReservationService {
         reservation.setStartTime(LocalDateTime.of(reservationDto.getReservationDate(), reservationDto.getStartTime()));
         reservation.setEndTime(LocalDateTime.of(reservationDto.getReservationDate(), reservationDto.getEndTime()));
         reservation.setUserNum(reservationDto.getUserNum());
-        reservation.setReservationStatus("PENDING"); // 예약 상태는 기본적으로 "대기중"으로 설정합니다.
+        reservation.setReservationStatus("예약확정 대기중"); // 예약 상태는 기본적으로 "대기중"으로 설정합니다.
         reservation.setCreatedAt(LocalDateTime.now());
         reservation.setUpdatedAt(LocalDateTime.now());
 
