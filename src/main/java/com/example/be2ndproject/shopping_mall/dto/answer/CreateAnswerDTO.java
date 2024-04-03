@@ -14,6 +14,5 @@ import java.time.LocalDateTime;
 public class CreateAnswerDTO {
     private Integer spaceId;
     private Integer qnaId;
-    private String email;
     private String content;
 }

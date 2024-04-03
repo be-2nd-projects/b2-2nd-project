@@ -4,7 +4,6 @@ import com.example.be2ndproject.shopping_mall.dto.ask.CreateAskDTO;
 import com.example.be2ndproject.shopping_mall.dto.ask.SearchAskDTO;
 import com.example.be2ndproject.shopping_mall.dto.ask.SearchAskResponseDTO;
 import com.example.be2ndproject.shopping_mall.dto.ask.UpdateAskDTO;
-import com.example.be2ndproject.shopping_mall.repository.ask.Ask;
 import com.example.be2ndproject.shopping_mall.service.AskService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;

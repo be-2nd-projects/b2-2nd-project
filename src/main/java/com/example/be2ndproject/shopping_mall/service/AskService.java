@@ -39,7 +39,10 @@ public class AskService {
         String email = authentication.getName(); // 이메일
 
         // 이메일 기반으로 사용자 엔티티를 DB에서 조회, .orElseThrow()로 바로 검증
-        Member member = memberJpaRepository.findByEmail(createAskDTO.getEmail())
+        // Member member = memberJpaRepository.findByEmail(createAskDTO.getEmail())
+        //        .orElseThrow(() -> new IllegalArgumentException("유저를 찾을 수 없습니다. Email : " + createAskDTO.getEmail()));
+
+        Member member = memberJpaRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("유저를 찾을 수 없습니다. Email : " + createAskDTO.getEmail()));
 
         //대여한 공간의 정보를 DB에서 조회

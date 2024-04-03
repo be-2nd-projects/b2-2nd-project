@@ -15,11 +15,13 @@ import com.example.be2ndproject.shopping_mall.repository.space.SpaceJpaRepositor
 import com.example.be2ndproject.shopping_mall.service.mapper.AnswerServiceMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,11 +40,19 @@ public class AnswerService {
         // 인증된 사용자의 메일을 가져옴
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName(); // 이메일
+
         System.out.println(email);
 
         // 이메일 기반으로 사용자 엔티티를 DB에서 조회, .orElseThrow()로 바로 검증
-        Member member = memberJpaRepository.findByEmail(createAnswerDTO.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("유저를 찾을 수 없습니다. Email : " + createAnswerDTO.getEmail()));
+        // Member member = memberJpaRepository.findByEmail(createAnswerDTO.getEmail())
+        //        .orElseThrow(() -> new IllegalArgumentException("유저를 찾을 수 없습니다. Email : " + createAnswerDTO.getEmail()));
+
+        Member member = memberJpaRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("유저를 찾을 수 없습니다. Email : " + email));
+
+        if(member.getRoles().equals("USER_GUEST")){
+            throw new IllegalArgumentException("해당 유저는 HOST 권한이 아닙니다. Roles : " + member.getRoles());
+        }
 
         //대여된 공간의 문의글 DB에서 조회
         Ask ask = askJpaRepository.findById(createAnswerDTO.getQnaId())
