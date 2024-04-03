@@ -1,7 +1,7 @@
 package com.example.be2ndproject.shopping_mall.repository.Images;
+import com.example.be2ndproject.shopping_mall.repository.Space.Spaces;
 import jakarta.persistence.*;
 import lombok.*;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,5 +21,9 @@ public class Images {
 
     @Column(name = "thumb", length = 1, nullable = false)
     private String thumb = "0";
+
+    @ManyToOne
+    @JoinColumn(name = "space_id", nullable = false)
+    private Spaces space;
 
 }

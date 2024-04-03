@@ -1,11 +1,14 @@
 package com.example.be2ndproject.shopping_mall.repository.Space;
 
+import com.example.be2ndproject.shopping_mall.repository.Images.Images;
 import com.example.be2ndproject.shopping_mall.repository.Member.Members;
 import lombok.Setter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Data
@@ -23,6 +26,9 @@ public class Spaces {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private Members user;
+
+    @OneToMany(mappedBy = "space", cascade = CascadeType.ALL)
+    private List<Images> images;
 
     @Column(name = "space_name")
     private String spaceName;
