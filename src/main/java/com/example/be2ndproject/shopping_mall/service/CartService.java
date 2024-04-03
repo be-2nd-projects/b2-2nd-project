@@ -1,7 +1,13 @@
 package com.example.be2ndproject.shopping_mall.service;
 
-import org.springframework.stereotype.Service;
+import com.example.be2ndproject.shopping_mall.dto.CartDto;
 
-@Service
-public class CartService {
+import java.util.List;
+
+public interface CartService {
+    CartDto addToCart(CartDto cartDto);
+
+    List<CartDto> getCartItemsByUserId(Integer userId);
+
+    void deleteCart(Integer cartId);
 }

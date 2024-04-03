@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -40,13 +41,23 @@ public class SecurityConfiguration {
                 // 이 방법은 간단하고 쉽게 구현할 수 있지만, 보안 수준이 낮고 인증 정보가 평문으로 전송되기 때문에 보안에 취약함.
                 // Http Basic 인증을 사용하지 않도록 Spring Security 구성을 설정
                 .authorizeHttpRequests(authorize -> // 요청에 대한 접근 권한을 설정
-                        authorize.requestMatchers("/v1/api/logout").authenticated() // 로그아웃은 인증된 사용자에게만 허용
-                                .requestMatchers("/v1/api/guest/**").hasAnyRole("GUEST", "HOST")
-                                .requestMatchers("/v1/api/host/**").hasRole("HOST")
+
+                        authorize
+                                .requestMatchers("/v1/api/logout").authenticated() // 로그아웃은 인증된 사용자에게만 허용
+                                .requestMatchers("/v1/api/guest/**").hasAnyRole("GUEST", "HOST") //guest 페이지는 guest,host권한을 가진 사람 둘다 접근가능
+                                .requestMatchers("/v1/api/host/**").hasRole("HOST")                     //host 페이지는 host권한을 가진 사람만 접근가능
                                 .requestMatchers("/v1/api/sign", "/v1/api/login", "/v2/api-docs",
                                         "/configuration/ui", "/swagger-resources/**", "/configuration/security",
-                                        "/swagger-ui/**", "/webjars/**", "/swagger/**").permitAll() // 회원가입, 로그인 경로는 모두에게 허용 Swagger 문서 관련 경로는 모두에게 허용
+                                        "/swagger-ui/**", "/webjars/**", "/swagger/**","/oauth2/**").permitAll() // 회원가입, 로그인 경로는 모두에게 허용 Swagger 문서 관련 경로는 모두에게 허용
                                 .anyRequest().permitAll()) // 그 외 모든 요청은 인증을 필요로 함
+//                        .oauth2Login(oauth2Login -> oauth2Login
+//                                .authorizationEndpoint().baseUri("/oauth2/authorize") // 소셜 로그인 url
+//                        .authorizationRequestRepository(cookieAuthorizationRequestRepository)
+//                                .redirectionEndpoint().baseUri("/oauth2/callback/*") // 소셜 인증 후 redirect url// 인증 요청을 cookie 에 저장
+//                                .userInfoEndpoint().userService(customOAuth2UserService)  // 회원 정보 처리
+//                                .successHandler(oAuth2AuthenticationSuccessHandler)
+//                                .failureHandler(oAuth2AuthenticationFailureHandler))
+
                 .logout(logout -> logout.logoutUrl("/v1/api/logout") // 로그아웃 설정 ,  로그아웃 처리 URL
                         .invalidateHttpSession(true) // 세션 무효화
                         .deleteCookies("JSESSIONID") // 쿠키 삭제
@@ -62,7 +73,7 @@ public class SecurityConfiguration {
                 .exceptionHandling(e->e.authenticationEntryPoint(new CustomAuthenticationEntryPoint()) // 인증 실패 시 처리를 위한 진입점 설정
                                 .accessDeniedHandler(new CustomerAccessDeniedHandler())                // 예외 처리 설정
                         )
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class); // JWT 인증 필터 추가
+                        .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class); // JWT 인증 필터 추가
 
         // 기타 필요한 설정 추가
         http.with(new MyCustomDs(), myCustomDs -> myCustomDs.getClass());

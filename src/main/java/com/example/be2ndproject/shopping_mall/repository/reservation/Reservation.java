@@ -1,15 +1,15 @@
 package com.example.be2ndproject.shopping_mall.repository.reservation;
 
-import com.example.be2ndproject.shopping_mall.repository.member.Member;
 import com.example.be2ndproject.shopping_mall.repository.space.Space;
+import com.example.be2ndproject.shopping_mall.repository.member.Member;
+
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -23,7 +23,7 @@ public class Reservation {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private Member user;
+    private Member member;
 
     @ManyToOne
     @JoinColumn(name = "space_id", referencedColumnName = "space_id")
@@ -46,5 +46,8 @@ public class Reservation {
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
+
+    @Column(name = "user_num")
+    private int userNum;
 
 }

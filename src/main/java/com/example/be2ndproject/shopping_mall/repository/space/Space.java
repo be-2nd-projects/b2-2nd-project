@@ -21,7 +21,7 @@ public class Space {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private Member user;
+    private Member member;
 
     @Column(name = "space_name")
     private String spaceName;

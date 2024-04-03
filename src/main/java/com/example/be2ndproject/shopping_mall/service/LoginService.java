@@ -6,6 +6,11 @@ import com.example.be2ndproject.shopping_mall.dto.auth.Login;
 import com.example.be2ndproject.shopping_mall.dto.auth.SignUp;
 import com.example.be2ndproject.shopping_mall.repository.member.MemberJpaRepository;
 import com.example.be2ndproject.shopping_mall.repository.member.Member;
+import com.example.be2ndproject.shopping_mall.repository.space.SpaceJpaRepository;
+import com.example.be2ndproject.shopping_mall.repository.reservation.ReservationJpaRepository;
+
+import com.example.be2ndproject.shopping_mall.repository.review.ReviewJpaRepository;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Slf4j
@@ -28,7 +34,9 @@ public class LoginService {
     private final MemberJpaRepository memberJpaRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-
+    private final SpaceJpaRepository spaceJpaRepository;
+    private final ReservationJpaRepository reservationJpaRepository;
+    private final ReviewJpaRepository reviewJpaRepository;
 
 
     @Transactional(transactionManager = "tmJpa")
@@ -46,13 +54,14 @@ public class LoginService {
 
         // 비밀번호 생성 규칙 추가
         if (!isPasswordValid(password)) {
-            log.info("비밀번호는 영문자 숫자 특수문자 조합하여 8글자에서 20글자 미만으로 설정해주세요");
-            return "비밀번호는 영문자, 숫자, 특수문자를 조합하여 8글자에서 20글자 사이로 설정해주세요." ; // 비밀번호 생성 규칙에 맞지 않으면 회원가입 실패
+            log.info("error 비밀번호는 영문자 숫자 특수문자 조합하여 8글자에서 20글자 미만으로 설정해주세요");
+            return "비밀번호는 영문자, 숫자, 특수문자를 조합하여 8글자에서 20글자 사이로 설정해주세요."; // 비밀번호 생성 규칙에 맞지 않으면 회원가입 실패
         }
 
         // 이메일 중복 확인 기능 추가
         if (isEmailAlreadyRegistered(email)) {
-            return "이미 등록된 이메일입니다. 다른 이메일을 사용해주세요."; // 이미 등록된 이메일이면 회원가입 실패
+            log.info("error 이미 등록된 이메일입니다. 다른 이메일을 사용해주세요.");
+            return "이미 등록된 이메일입니다. 다른 이메일을 사용해주세요.";// 이미 등록된 이메일이면 회원가입 실패
         }
 
         // 비밀번호 암호화
@@ -64,6 +73,9 @@ public class LoginService {
         } else {
             finalRoles = roles;
         }
+
+        // 회원 가입 시간 설정 (현재 시간)
+        LocalDateTime createAt = LocalDateTime.now();
 
         //  유저가 있으면 ID 만 등록 아니면 유저도 만들기
         Member memberFound = memberJpaRepository.findByEmail(email).orElseGet(() ->
@@ -78,6 +90,7 @@ public class LoginService {
                         .businessNumber(businessNumber)
                         .providerId(providerId)
                         .provider(provider)
+                        .createdAt(createAt) // 생성 시간 설정
                         .build()
                 ));
         return "회원가입이 완료되었습니다.";
@@ -97,32 +110,53 @@ public class LoginService {
         return existingMember.isPresent();
     }
 
-    public String login(Login loginRequest) {
+    public String login(Login loginRequest) throws Exception {
         String email = loginRequest.getEmail();
         String password = loginRequest.getPassword();
 
-        // 인증 시도
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(email, password));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+            // 인증 시도
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(email, password));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+
 
         // JWT 토큰 생성
         return jwtTokenProvider.createToken(email);
-
     }
 
-    public String createToken(String email) {
-        String token = jwtTokenProvider.createToken(email); // 토큰 생성 및 변수에 저장
-        return token; // 생성된 토큰 반환
+
+    @Transactional(transactionManager = "tmJpa")
+    public void deleteUserByEmail(String userEmail) {
+        // 이메일을 기반으로 회원 정보를 조회하여 삭제
+        Optional<Member> member = memberJpaRepository.findByEmail(userEmail);
+        if (member.isPresent()) {
+            // 회원 정보가 존재하면 삭제
+            Member existingMember = member.get();
+            spaceJpaRepository.deleteByMember(Optional.of(existingMember));
+            reservationJpaRepository.deleteByMember(Optional.of(existingMember));
+            reviewJpaRepository.deleteByMember(Optional.of(existingMember));
+            memberJpaRepository.delete(existingMember);
+        } else {
+            // 회원 정보가 존재하지 않는 경우 예외 처리 또는 적절한 응답 반환
+            throw new RuntimeException("회원 정보를 찾을 수 없습니다.");
+        }
     }
 
-//    @Transactional(transactionManager = "tmJpa")
-//    public void deleteUser(Integer userId) {
-//        memberJpaRepository.deleteById(userId);
-//        // 사용자와 관련된 다른 테이블의 레코드 삭제 (예: 공간 정보, 예약 정보 등)
-//        spaceJpaRepository.deleteByUserId(userId);
-//        reservationJpaRepository.deleteByUserId(userId);
-//        reviewJpaRepository.deleteByUserId(userId);
-//    }
+
+    public String getProfileImageUrl(String email) {
+        // 이메일을 기반으로 회원 정보 조회
+        Optional<Member> memberOptional = memberJpaRepository.findByEmail(email);
+
+        // 회원 정보가 존재하는지 확인
+        if (memberOptional.isPresent()) {
+            Member member = memberOptional.get();
+            // 회원의 프로필 이미지 URL 반환
+            return member.getProfileImageUrl();
+        } else {
+            // 회원 정보가 존재하지 않는 경우
+            return "회원가입 시 이미지 파일을 저장하지 않았습니다.";
+        }
+    }
 }
 
