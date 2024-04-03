@@ -1,7 +1,8 @@
 package com.example.be2ndproject.shopping_mall.repository.Image;
+import com.example.be2ndproject.shopping_mall.repository.space.Space;
 import jakarta.persistence.*;
 import lombok.*;
-
+@Data
 @Getter
 @Setter
 @AllArgsConstructor
@@ -23,4 +24,10 @@ public class Image {
     @Column(name = "thumb", length = 1, nullable = false)
     private String thumb = "0";
 
+    @ManyToOne
+    @JoinColumn(name = "space_id", nullable = false)
+    private Space space;
+
 }
+
+
