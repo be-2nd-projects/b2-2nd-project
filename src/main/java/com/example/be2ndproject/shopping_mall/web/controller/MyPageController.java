@@ -2,12 +2,11 @@ package com.example.be2ndproject.shopping_mall.web.controller;
 
 import com.example.be2ndproject.shopping_mall.config.auth.PrincipalDetails;
 import com.example.be2ndproject.shopping_mall.service.MyPageService;
+import com.example.be2ndproject.shopping_mall.web.dto.MyInfoRequest;
 import com.example.be2ndproject.shopping_mall.web.dto.MyInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,4 +21,10 @@ public class MyPageController {
         return myPageService.findMyInfo(principalDetails);
     }
 
+    // 내 정보 수정
+    @PatchMapping("/my-page/update")
+    public String updateMyInfo (@AuthenticationPrincipal PrincipalDetails principalDetails,
+                                @RequestBody MyInfoRequest myInfoRequest){
+        return myPageService.updateMyInfo(principalDetails, myInfoRequest);
+    }
 }

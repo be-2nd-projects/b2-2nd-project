@@ -49,7 +49,7 @@ public class Member {
     private LocalDateTime deletedAt;
 
     @Column(name = "user_status")
-    private boolean userStatus;
+    private Boolean userStatus;
 
     @Column(name = "profile_img_url")
     private String profileImageUrl;
