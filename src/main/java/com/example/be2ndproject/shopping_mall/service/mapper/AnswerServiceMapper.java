@@ -14,6 +14,8 @@ public interface AnswerServiceMapper {
     AnswerServiceMapper INSTANCE = Mappers.getMapper(AnswerServiceMapper.class);
 
     @Mapping(target = "answerId", source = "answerId")
+    @Mapping(target = "qnaId", source = "ask.qnaId")
+    @Mapping(target = "title", source = "ask.title")
     @Mapping(target = "author", source = "user.name")
     @Mapping(target = "createdAt", source = "createdAt")
     SearchAnswerResponseDTO entityToDTO(Answer answer);
