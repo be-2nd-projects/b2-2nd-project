@@ -7,7 +7,9 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -21,6 +23,9 @@ public class Answer {
     @ManyToOne
     @JoinColumn(name = "qna_id", referencedColumnName = "qna_id")
     private Ask ask;
+
+    @Column(name = "title", length = 45)
+    private String title;
 
     @Column(name = "content", length = 255, nullable = false)
     private String content;
