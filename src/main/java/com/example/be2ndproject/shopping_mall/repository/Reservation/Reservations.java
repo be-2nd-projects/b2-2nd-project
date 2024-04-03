@@ -1,7 +1,7 @@
 package com.example.be2ndproject.shopping_mall.repository.Reservation;
 
 import com.example.be2ndproject.shopping_mall.repository.Member.Members;
-import com.example.be2ndproject.shopping_mall.repository.Space.Spaces;
+import com.example.be2ndproject.shopping_mall.repository.space.Space;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,7 +27,7 @@ public class Reservations {
 
     @ManyToOne
     @JoinColumn(name = "space_id", referencedColumnName = "space_id")
-    private Spaces space;
+    private Space space;
 
     @Column(name = "start_time")
     private LocalDateTime startTime;

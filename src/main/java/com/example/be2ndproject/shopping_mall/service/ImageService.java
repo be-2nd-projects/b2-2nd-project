@@ -1,7 +1,7 @@
 package com.example.be2ndproject.shopping_mall.service;
 
-import com.example.be2ndproject.shopping_mall.repository.Images.Images;
-import com.example.be2ndproject.shopping_mall.repository.Space.Spaces;
+import com.example.be2ndproject.shopping_mall.repository.Image.Image;
+import com.example.be2ndproject.shopping_mall.repository.space.Space;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,8 +19,8 @@ import java.util.UUID;
 public class ImageService {
 
     // 이미지를 업로드하고 저장하는 메서드
-    public List<Images> uploadImages(MultipartFile[] multipartFiles, Spaces space) throws IOException {
-        List<Images> imagesList = new ArrayList<>();
+    public List<Image> uploadImages(MultipartFile[] multipartFiles, Space space) throws IOException {
+        List<Image> imageList = new ArrayList<>();
 
         for (MultipartFile file : multipartFiles) {
             // 이미지 파일을 저장할 디렉토리 경로 설정
@@ -42,13 +42,13 @@ public class ImageService {
             file.transferTo(dest);
 
             // 이미지 엔티티 생성 및 설정
-            Images image = new Images();
+            Image image = new Image();
             image.setImageUrl(fileName); // 파일 이름을 URL로 설정 또는 실제 서버에서 접근 가능한 URL을 설정
             image.setSpace(space);
 
-            imagesList.add(image);
+            imageList.add(image);
         }
 
-        return imagesList;
+        return imageList;
     }
 }

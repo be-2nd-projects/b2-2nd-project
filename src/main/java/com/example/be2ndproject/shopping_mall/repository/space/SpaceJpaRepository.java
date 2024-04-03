@@ -1,4 +1,4 @@
-package com.example.be2ndproject.shopping_mall.repository.Space;
+package com.example.be2ndproject.shopping_mall.repository.space;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -9,6 +9,6 @@ import java.util.List;
 
 
 @Repository
-public interface SpaceJpaRepository extends JpaRepository<Spaces,Integer> {
-    List<Spaces> findByUser(Members user_id);
+public interface SpaceJpaRepository extends JpaRepository<Space,Integer> {
+    List<Space> findByUser(Members user_id);
 }

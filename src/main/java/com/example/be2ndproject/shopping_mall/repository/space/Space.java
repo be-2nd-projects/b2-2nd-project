@@ -1,6 +1,6 @@
-package com.example.be2ndproject.shopping_mall.repository.Space;
+package com.example.be2ndproject.shopping_mall.repository.space;
 
-import com.example.be2ndproject.shopping_mall.repository.Images.Images;
+import com.example.be2ndproject.shopping_mall.repository.Image.Image;
 import com.example.be2ndproject.shopping_mall.repository.Member.Members;
 import lombok.Setter;
 import lombok.AllArgsConstructor;
@@ -16,7 +16,7 @@ import jakarta.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "Spaces")
-public class Spaces {
+public class Space {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +28,7 @@ public class Spaces {
     private Members user;
 
     @OneToMany(mappedBy = "space", cascade = CascadeType.ALL)
-    private List<Images> images;
+    private List<Image> images;
 
     @Column(name = "space_name")
     private String spaceName;

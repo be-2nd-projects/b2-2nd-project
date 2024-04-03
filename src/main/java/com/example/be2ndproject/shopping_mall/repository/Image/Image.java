@@ -1,5 +1,5 @@
-package com.example.be2ndproject.shopping_mall.repository.Images;
-import com.example.be2ndproject.shopping_mall.repository.Space.Spaces;
+package com.example.be2ndproject.shopping_mall.repository.Image;
+import com.example.be2ndproject.shopping_mall.repository.space.Space;
 import jakarta.persistence.*;
 import lombok.*;
 @Data
@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "Images")
-public class Images {
+public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "image_id")
@@ -24,6 +24,6 @@ public class Images {
 
     @ManyToOne
     @JoinColumn(name = "space_id", nullable = false)
-    private Spaces space;
+    private Space space;
 
 }
