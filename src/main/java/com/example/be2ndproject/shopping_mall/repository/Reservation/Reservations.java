@@ -7,7 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Data
 @AllArgsConstructor
@@ -30,10 +32,10 @@ public class Reservations {
     private Spaces space;
 
     @Column(name = "start_time")
-    private LocalDateTime startTime;
+    private LocalTime startTime;
 
     @Column(name = "end_time")
-    private LocalDateTime endTime;
+    private LocalTime endTime;
 
     @Column(name = "reservation_status")
     private String reservationStatus;
@@ -47,4 +49,12 @@ public class Reservations {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
+<<<<<<< Updated upstream:src/main/java/com/example/be2ndproject/shopping_mall/repository/Reservation/Reservations.java
+=======
+    @Column(name = "user_num")
+    private int userNum;
+
+    @Column(name = "reservation_date")
+    private LocalDate reservationDate;
+>>>>>>> Stashed changes:src/main/java/com/example/be2ndproject/shopping_mall/repository/reservation/Reservation.java
 }
