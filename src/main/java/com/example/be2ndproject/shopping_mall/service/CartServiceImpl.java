@@ -9,6 +9,8 @@ import com.example.be2ndproject.shopping_mall.repository.space.Space;
 import com.example.be2ndproject.shopping_mall.repository.space.SpaceJpaRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,18 +24,29 @@ public class CartServiceImpl implements CartService {
     private final MemberJpaRepository memberJpaRepository;
     private final SpaceJpaRepository spaceJpaRepository;
 
+    private Member getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentEmail = authentication.getName();
+        return memberJpaRepository.findByEmail(currentEmail)
+                .orElseThrow(() -> new EntityNotFoundException("사용자를 찾을 수 없습니다. : " + currentEmail));
+    }
+
     @Override
     public CartDto addToCart(CartDto cartDto) {
 
+        Member currentUser = getCurrentUser();
+
+        if (!currentUser.getUserId().equals(cartDto.getUserId())) {
+            throw new IllegalStateException("사용자는 본인의 카트만 수정할 수 있습니다.");
+        }
+
         // 사용자랑 공간 조회
-        Member member = memberJpaRepository.findById(cartDto.getUserId())
-                .orElseThrow(() -> new RuntimeException("사용자를 찾지 못했습니다. ID : " + cartDto.getUserId()));
         Space space = spaceJpaRepository.findById(cartDto.getSpaceId())
                 .orElseThrow(() -> new RuntimeException("공간정보를 찾지 못했습니다. ID : " + cartDto.getSpaceId()));
 
         // 엔티티 생성 및 초기화
         Cart cart = new Cart();
-        cart.setMember(member);
+        cart.setMember(currentUser);
         cart.setSpace(space);
 
         // 카트 저장
@@ -42,7 +55,7 @@ public class CartServiceImpl implements CartService {
         // 새 Dto 생성하여 반환
         CartDto savedCartDto = new CartDto();
         savedCartDto.setCartId(savedCart.getCartId());
-        savedCartDto.setUserId(member.getUserId());
+        savedCartDto.setUserId(currentUser.getUserId());
         savedCartDto.setSpaceId(space.getSpaceId());
 
         return savedCartDto;
@@ -50,6 +63,12 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public List<CartDto> getCartItemsByUserId(Integer userId) {
+        Member currentUser = getCurrentUser();
+
+        // 요청된 userId와 현재 로그인한 사용자의 ID가 다른 경우 예외 처리
+        if (!currentUser.getUserId().equals(userId)) {
+            throw new IllegalStateException("사용자는 본인의 카트 정보만 조회할 수 있습니다.");
+        }
 
         // 사용자 Id에 해당하는 카트 아이템 전부 조회
         List<Cart> carts = cartJpaRepository.findAllByMember_UserId(userId);
@@ -64,8 +83,14 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void deleteCart(Integer cartId) {
+        Member currentUser = getCurrentUser();
         Cart cart = cartJpaRepository.findById(cartId)
                 .orElseThrow(() -> new EntityNotFoundException("카트정보를 찾을 수 없습니다" + cartId));
+
+        if (!cart.getMember().equals(currentUser)) {
+            throw new IllegalStateException("사용자는 본인의 카트만 삭제할 수 있습니다.");
+        }
+
         cartJpaRepository.delete(cart);
     }
 }

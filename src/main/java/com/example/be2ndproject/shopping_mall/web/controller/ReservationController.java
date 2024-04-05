@@ -1,7 +1,7 @@
 package com.example.be2ndproject.shopping_mall.web.controller;
 
-import com.example.be2ndproject.shopping_mall.dto.ReservationDto;
-import com.example.be2ndproject.shopping_mall.repository.reservation.Reservation;
+import com.example.be2ndproject.shopping_mall.dto.ReservationRequestDto;
+import com.example.be2ndproject.shopping_mall.dto.ReservationResponseDto;
 import com.example.be2ndproject.shopping_mall.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +22,8 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ResponseEntity<Reservation> createReservation(@RequestBody ReservationDto reservationDto) {
-        Reservation createdReservation = reservationService.createReservation(reservationDto);
+    public ResponseEntity<ReservationResponseDto> createReservation(@RequestBody ReservationRequestDto reservationRequestDto) {
+        ReservationResponseDto createdReservation = reservationService.createReservation(reservationRequestDto);
         return ResponseEntity.ok(createdReservation);
     }
 }

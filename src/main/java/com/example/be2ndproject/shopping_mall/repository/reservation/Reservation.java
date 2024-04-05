@@ -1,15 +1,17 @@
 package com.example.be2ndproject.shopping_mall.repository.reservation;
 
-import com.example.be2ndproject.shopping_mall.repository.space.Space;
 import com.example.be2ndproject.shopping_mall.repository.member.Member;
-
+import com.example.be2ndproject.shopping_mall.repository.space.Space;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -30,10 +32,10 @@ public class Reservation {
     private Space space;
 
     @Column(name = "start_time")
-    private LocalDateTime startTime;
+    private LocalTime startTime;
 
     @Column(name = "end_time")
-    private LocalDateTime endTime;
+    private LocalTime endTime;
 
     @Column(name = "reservation_status")
     private String reservationStatus;
@@ -50,4 +52,6 @@ public class Reservation {
     @Column(name = "user_num")
     private int userNum;
 
+    @Column(name = "reservation_date")
+    private LocalDate reservationDate;
 }
