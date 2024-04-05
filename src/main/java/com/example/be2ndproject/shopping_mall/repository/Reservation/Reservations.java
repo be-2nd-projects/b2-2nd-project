@@ -49,12 +49,9 @@ public class Reservations {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
-<<<<<<< Updated upstream:src/main/java/com/example/be2ndproject/shopping_mall/repository/Reservation/Reservations.java
-=======
     @Column(name = "user_num")
     private int userNum;
 
     @Column(name = "reservation_date")
     private LocalDate reservationDate;
->>>>>>> Stashed changes:src/main/java/com/example/be2ndproject/shopping_mall/repository/reservation/Reservation.java
 }

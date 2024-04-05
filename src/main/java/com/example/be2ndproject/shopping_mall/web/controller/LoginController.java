@@ -5,7 +5,6 @@ import com.example.be2ndproject.shopping_mall.config.JWT.JwtTokenProvider;
 import com.example.be2ndproject.shopping_mall.config.security.CustomLogoutHandler;
 import com.example.be2ndproject.shopping_mall.dto.auth.Login;
 import com.example.be2ndproject.shopping_mall.dto.auth.SignUp;
-import com.example.be2ndproject.shopping_mall.repository.Member.MemberJpaRepository;
 import com.example.be2ndproject.shopping_mall.service.LoginService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,8 +12,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;

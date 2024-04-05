@@ -6,10 +6,6 @@ import com.example.be2ndproject.shopping_mall.dto.auth.Login;
 import com.example.be2ndproject.shopping_mall.dto.auth.SignUp;
 import com.example.be2ndproject.shopping_mall.repository.Member.MemberJpaRepository;
 import com.example.be2ndproject.shopping_mall.repository.Member.Members;
-import com.example.be2ndproject.shopping_mall.repository.Reservation.ReservationJpaRepository;
-import com.example.be2ndproject.shopping_mall.repository.Reservation.Reservations;
-import com.example.be2ndproject.shopping_mall.repository.Review.ReviewJpaRepository;
-import com.example.be2ndproject.shopping_mall.repository.Space.SpaceJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
