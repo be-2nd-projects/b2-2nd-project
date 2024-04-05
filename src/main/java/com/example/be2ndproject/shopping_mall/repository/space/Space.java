@@ -1,27 +1,23 @@
 package com.example.be2ndproject.shopping_mall.repository.space;
 
 import com.example.be2ndproject.shopping_mall.repository.member.Member;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
 
-import com.example.be2ndproject.shopping_mall.repository.Image.Image;
-import com.example.be2ndproject.shopping_mall.repository.member.Member;
 import lombok.Setter;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.List;
-
-
-@Data
+@Builder // @Builder 어노테이션 추가
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "Spaces")
+@JsonIgnoreProperties("member")
 public class Space {
 
     @Id
@@ -32,9 +28,6 @@ public class Space {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private Member member;
-
-    @OneToMany(mappedBy = "space", cascade = CascadeType.ALL)
-    private List<Image> images;
 
     @Column(name = "space_name")
     private String spaceName;
@@ -73,7 +66,4 @@ public class Space {
     @Column(name = "score")
     private Float score;
 
-    @Setter
-    @Column(name = "stock")
-    private int stock;
 }
